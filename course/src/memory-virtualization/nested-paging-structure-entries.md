@@ -1,0 +1,17 @@
+# Nested paging structure entries
+- Comparable to the traditional paging structure entries
+  - bit[11:0] = flags including page permissions
+  - bit[N:12] = either a PA of the next nested paging structure, or a page frame to translate to
+- Intel: Similar to traditional paging structure entries but different
+  - 📖Figure 29-1. Formats of EPTP and EPT Paging-Structure Entries
+  - taking 4KB translation as an example
+    - 📖Table 29-1. Format of an EPT PML4 Entry (PML4E) that References an EPT Page-Directory-Pointer Table
+    - 📖Table 29-3. Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that References an EPT Page Directory
+    - 📖Table 29-5. Format of an EPT Page-Directory Entry (PDE) that References an EPT Page Table
+    - 📖Table 29-6. Format of an EPT Page-Table Entry that Maps a 4-KByte Page
+- AMD: _Exactly_ the same as traditional paging structure entries
+  - taking 4KB translation as an example
+    - 📖Figure 5-20. 4-Kbyte PML4E-Long Mode
+    - 📖Figure 5-21. 4-Kbyte PDPE-Long Mode
+    - 📖Figure 5-22. 4-Kbyte PDE-Long Mode
+    - 📖Figure 5-23. 4-Kbyte PTE-Long Mode

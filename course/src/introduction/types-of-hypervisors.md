@@ -1,0 +1,12 @@
+# Types of hypervisors
+- Robert P. Goldberg coined VMM architecture types:
+  - Type I or bare metal: The VMM runs on a bare machine.
+  - Type II or hosted: The VMM runs on an extended host, under the host operating system.
+- Can be understood as:
+  - Type 1: No OS runs in the host-mode. `CPUID` instructions ran by your OS would be intercepted by a hypervisor.
+    - Hyper-V, Xen: even "admin OS" runs in the guest-mode
+    - VMware ESXi, BitVisor: no "admin OS"
+    - CheatEngine, BluePill, antivirus-hypervisor: turns the current OS into guest-mode
+  - Type 2: A general purpose OS runs in the host-mode. `CPUID` instructions ran by your OS would not be intercepted.
+    - KVM, VirtualBox, VMware Workstation: works as a kernel extension. The host OS runs in the host-mode
+- Our hypervisor is type-1 (no admin OS)

@@ -1,0 +1,10 @@
+[book]
+authors = ["Satoshi Tanda"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Hypervisor 101 in Rust"
+
+[output.html.fold]
+enable = true
+level = 0

@@ -1,0 +1,15 @@
+# Motivation
+- Hypervisors are
+  - Cool
+    - Foundation of cloud-platforms: KVM (GCP), Hyper-V (Azure), Nitro Hypervisor (AWS), Oracle Cloud (Xen)
+  - Interesting
+    - Foundation of major security features: Virtualization Based Security, Secured-core PC (Platform Properties Assessment Module)
+    - Used in security research: [BitVisor](https://github.com/matsu/bitvisor/tree/master/core), [Intel Kernel Guard Technology](https://github.com/intel/ikgt-core)
+  - Convenient
+    - System-level isolation: VMware Workstation/Fusion, [ACRN]((https://github.com/projectacrn/acrn-hypervisor)), Nitro Hypervisor, [Qubes OS](https://www.qubes-os.org/)
+    - System-level inspection: [Asahi Linux m1n1 Hypervisor](https://github.com/AsahiLinux/m1n1), [Cuckoo Sandbox](https://cuckoosandbox.org/), [HVMI](https://github.com/hvmi), [kAFL/Nyx](https://nyx-fuzz.com/), [Cheat Engine DBVM](https://github.com/cheat-engine/cheat-engine/), [Blue Pill](https://en.wikipedia.org/wiki/Blue_Pill_(software)), antivirus-hypervisors (eg, Avast Premium Security)
+- Understanding of essentials are important for anything with it
+  - Want to audit code?
+  - Want to customize them?
+  - Want to write your own ones?
+  - Want to join a team doing those?

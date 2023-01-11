@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "rust: cargo xtask bochs-intel",
+            "command": "cargo xtask bochs-intel",
+            "group": {
+                "kind": "build",
+                "isDefault": false,
+            },
+        },
+        {
+            "type": "shell",
+            "label": "rust: cargo xtask bochs-amd",
+            "command": "cargo xtask bochs-amd",
+            "group": {
+                "kind": "build",
+                "isDefault": false,
+            },
+        },
+        {
+            "type": "shell",
+            "label": "rust: cargo xtask vmware",
+            "command": "cargo xtask vmware",
+            "group": {
+                "kind": "build",
+                "isDefault": false,
+            },
+        },
+    ]
+}

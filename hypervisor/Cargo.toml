@@ -1,0 +1,49 @@
+cargo-features = ["per-package-target"]
+
+[package]
+name = "rhv"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "A type-1 fuzzing hypervisor for UEFI on Intel/AMD processors"
+license.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme.workspace = true
+forced-target = "x86_64-unknown-uefi"
+
+# no_std cannot support `cargo test` and `cargo bench`
+[[bin]]
+name = "rhv"
+test = false
+bench = false
+
+[dependencies]
+bitfield = "0.14"
+bit-vec = { version = "0.6", default-features = false }
+derivative = { version ="2.2", features = ["use_core"]}
+log = { version = "0.4", default-features = false }
+serde = { version = "1.0", default-features = false, features = ["alloc", "derive"]}
+serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
+spin = "0.9"
+uefi = { version = "0.19", features = ["alloc"] }
+x86 = "0.52"
+
+[features]
+# Default is configured for Bochs. For bare metal, start with no feature and
+# opt-in one by one to avoid compatibility issues with particular models.
+default = ["time_report"]
+
+# Switches the mutation mode from sequential bit-flipping to random byte modification.
+# Default is sequential bit-flipping for better reproducibility and testing.
+random_byte_modification = []
+
+# Reports summary of fuzzing stats onto stdout. Not useful with Bochs. On some
+# devices, this may cause occasional system freeze.
+stdout_stats_report = []
+
+# Reports current time on serial log, and if "stdout_stats_report" is enabled,
+# time-related stats on stdout. On some devices, this may cause occasional system
+# freeze.
+time_report = []

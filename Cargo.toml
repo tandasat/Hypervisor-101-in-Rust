@@ -1,0 +1,16 @@
+[workspace]
+members = [
+    "hypervisor",
+    "xtask",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Satoshi Tanda <tanda.sat@gmail.com>"]
+description = "The research fuzzing hypervisor"
+license = "MIT"
+repository = "https://github.com/tandasat/Hypervisor-101-in-Rust"
+keywords = ["fuzzing", "UEFI", "hypervisor"]
+categories = ["development-tools::testing", "no-std"]
+readme = "./README.md"

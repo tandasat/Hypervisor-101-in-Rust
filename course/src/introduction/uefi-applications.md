@@ -1,0 +1,13 @@
+# UEFI applications
+- UEFI is a pre-OS environment, aka, BIOS
+- In our execution phase (called "DXE") is:
+  - single threaded; no thread or process
+  - ring-0 and long-mode
+  - single flat address space
+- Why
+  - Less waste of system resources
+  - OS agnostic deigns and dev environment
+  - No need to worry about compatibility with OS
+  - Easy to access hardware features
+  - Well documented API
+  - Why would we need an OS?
