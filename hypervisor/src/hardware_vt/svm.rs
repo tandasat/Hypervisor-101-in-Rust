@@ -24,6 +24,7 @@ use core::{
     arch::global_asm,
     ptr::{addr_of, addr_of_mut},
 };
+use log::warn;
 use x86::{current::paging::BASE_PAGE_SHIFT, irq};
 
 /// SVM-specific data to represent a guest.
@@ -43,7 +44,9 @@ impl hardware_vt::HardwareVt for Svm {
 
         // Enable SVM. We assume the processor is compatible with this.
         // See: 15.4 Enabling SVM
-        wrmsr(x86::msr::IA32_EFER, rdmsr(x86::msr::IA32_EFER) | EFER_SVME);
+        todo!("E#1-1");
+        // Instruction: Enable SVM by setting the SVME bit in IA32_EFER.
+        // Hint: rdmsr(), wrmsr(), x86::msr::IA32_EFER and EFER_SVME
     }
 
     /// Configures SVM. We intercept #BP, #UD, #PF, external interrupt, the
@@ -64,7 +67,10 @@ impl hardware_vt::HardwareVt for Svm {
         //  the host state-save area in main memory at the physical address
         //  specified in the VM_HSAVE_PA MSR".
         // See: 15.5.1 Basic Operation
-        wrmsr(SVM_MSR_VM_HSAVE_PA, addr_of!(*self.host_state) as u64);
+        todo!("E#2-1");
+        // Instruction: Specify the address of the host state-save area into
+        //              SVM_MSR_VM_HSAVE_PA.
+        // Hint: addr_of!(), self.host_state, wrmsr(), SVM_MSR_VM_HSAVE_PA
 
         // Intercept external interrupts, the PAUSE instruction and shutdown.
         // Additionally, intercept the VMRUN instruction which is a HW requirement.
@@ -96,14 +102,20 @@ impl hardware_vt::HardwareVt for Svm {
         // - Setting the base address of the nested PML4
         //
         // See: 15.25.3 Enabling Nested Paging
-        self.vmcb.control_area.np_enable = SVM_NP_ENABLE_NP_ENABLE;
-        self.vmcb.control_area.ncr3 = nested_pml4_addr;
+        warn!("E#4-1");
+        // Instruction: Enable NPT.
+        // Hint: ncr3 and np_enable fields, and SVM_NP_ENABLE_NP_ENABLE,
+        //       nested_pml4_addr
 
         // Intercept #BP, #UD, #PF.
         // See: 15.12 Exception Intercepts
-        self.vmcb.control_area.intercept_exception = (1u32 << irq::BREAKPOINT_VECTOR)
-            | (1u32 << irq::INVALID_OPCODE_VECTOR)
-            | (1u32 << irq::PAGE_FAULT_VECTOR);
+        warn!("E#7-1");
+        // Instruction: Intercept #UD happens in a guest using event intercept
+        // Hint: intercept_exception field, and irq::INVALID_OPCODE_VECTOR
+
+        warn!("E#8-1");
+        // Instruction: Intercept #BP on the top of #UD
+        // Hint: irq::BREAKPOINT_VECTOR
     }
 
     /// Configures the guest states based on the snapshot.
@@ -156,13 +168,11 @@ impl hardware_vt::HardwareVt for Svm {
         self.vmcb.state_save_area.sysenter_cs = registers.sysenter_cs;
         self.vmcb.state_save_area.sysenter_esp = registers.sysenter_esp;
         self.vmcb.state_save_area.sysenter_eip = registers.sysenter_eip;
-        self.vmcb.state_save_area.efer = registers.efer | EFER_SVME;
-        self.vmcb.state_save_area.cr0 = registers.cr0;
-        self.vmcb.state_save_area.cr3 = registers.cr3;
-        self.vmcb.state_save_area.cr4 = registers.cr4 & !CR4_VMXE;
-        self.vmcb.state_save_area.rip = registers.rip;
-        self.vmcb.state_save_area.rsp = registers.rsp;
-        self.vmcb.state_save_area.rflags = registers.rflags;
+        todo!("E#3-1");
+        // Instruction: Configure guest EFER, CR0, CR3, CR4, RIP, RSP and RLAGS
+        //              fields with values in the snapshot.
+        // Hint: the sample snapshot is taken on Intel. Some register values need
+        //       adjustments. Inspect Bochs logs as you encounter errors.
         self.vmcb.state_save_area.rax = registers.rax;
         self.vmcb.state_save_area.gpat = rdmsr(x86::msr::IA32_PAT); // FIXME; use snapshot
 
@@ -170,20 +180,9 @@ impl hardware_vt::HardwareVt for Svm {
         // and loaded by software. General purpose registers are such examples.
         //
         // Note that RAX is managed within VMCB. See `StateSaveArea` and just above.
-        self.registers.rbx = registers.rbx;
-        self.registers.rcx = registers.rcx;
-        self.registers.rdx = registers.rdx;
-        self.registers.rdi = registers.rdi;
-        self.registers.rsi = registers.rsi;
-        self.registers.rbp = registers.rbp;
-        self.registers.r8 = registers.r8;
-        self.registers.r9 = registers.r9;
-        self.registers.r10 = registers.r10;
-        self.registers.r11 = registers.r11;
-        self.registers.r12 = registers.r12;
-        self.registers.r13 = registers.r13;
-        self.registers.r14 = registers.r14;
-        self.registers.r15 = registers.r15;
+        todo!("E#3-2");
+        // Instruction: Initialize the `self.registers` using values in the
+        //              snapshot.
     }
 
     /// Updates the guest states to have the guest use input data.

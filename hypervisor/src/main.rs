@@ -44,7 +44,15 @@
     rustdoc::invalid_html_tags,
 )]
 #![allow(clippy::cast_possible_truncation)]
-#![allow(clippy::multiple_crate_versions)]
+// Those are allowed only for the sake of exercises.
+#![allow(
+    dead_code,
+    unreachable_code,
+    unused,
+    unused_imports,
+    unused_variables,
+    unused_results
+)]
 
 #[cfg(not(target_pointer_width = "64"))]
 compile_error!("This project must target the 64bit-width pointer environment.");

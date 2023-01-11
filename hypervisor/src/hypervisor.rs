@@ -188,7 +188,9 @@ fn handle_nested_page_fault(
     // by one VM would be visible from other VMs. We enforces this restriction
     // via copy-on-write mechanism (see below).
     if qualification.missing_translation {
-        vm.build_translation(gpa, pa);
+        todo!("E#5-1");
+        // Instruction: Uncomment and complete implementation of it.
+        //vm.build_translation(gpa, pa);
     }
 
     // If this is a write memory access, trigger copy-on-write. That is, with
@@ -197,9 +199,13 @@ fn handle_nested_page_fault(
     // Then, copy current contents of memory at `pa` to the new dirty page. This
     // effectively isolate the effect of memory write into this current guest.
     // Failure of copy-on-write warrants aborting the VM.
-    if qualification.write_access && !vm.copy_on_write(gpa, pa) {
-        return VmExitResult::AbortVm(AbortReason::ExcessiveMemoryWrite);
-    }
+    warn!("E#6-2");
+    // Instruction: Enable copy-on-write semantic by
+    //              1. updating nested translation for `gpa` to use separate
+    //                 dirty pages, then
+    //              2. copying current contents of the PA that maps `gpa` into
+    //                 the dirty page selected
+    // Use: qualification.write_access, vm.copy_on_write()
 
     // Since we changed nested paging structure entries, cache invalidation may be
     // required.
@@ -249,15 +255,33 @@ fn handle_interrupt_or_exception(
     stats: &mut RunStats,
     qualification: &ExceptionQualification,
 ) -> VmExitResult {
+    todo!("E#7-2");
+    // Instruction: Comment out this todo!(). Make sense of execution flow to reach
+    //              here. What VM exit code was observed at the vmx.rs or svm.rs
+    //              level?
+    /*
+    assert!(qualification.exception_code == GuestException::InvalidOpcode);
+    return VmExitResult::AbortVm(AbortReason::EndMarker);
+    */
+
+    todo!("E#8-2");
+    // Instruction: 1. Comment out the above two lines.
+    //              2. Uncomment the following match-block.
+    //              3. Implement handling of `GuestException::BreakPoint` by:
+    //                  1. reverting patches in the snapshot memory
+    //                  2. saving the guest RIP as coverage information
+    //                  3. returning ResumeVm
+    // Hint: (1) entry.revert(), global.snapshot_mut().memory
+    //       (2) stats.newly_executed_basic_blks.push(), qualification.rip
+    //       (3) VmExitResult::ResumeVm
+    /*
     match global.patch_set().find(qualification.rip) {
         // There is a patch entry for RIP.
         Some(entry) => match qualification.exception_code {
             // If this is #BP, the exception is because of our coverage tracking
             // patch. Revert the patch, increase coverage, and resume the VM.
             GuestException::BreakPoint => {
-                entry.revert(global.snapshot_mut().memory.as_mut());
-                stats.newly_executed_basic_blks.push(qualification.rip);
-                VmExitResult::ResumeVm
+
             }
             // If this is #UD, it is our end marker. Abort the VM. This is the most
             // common abort reason.
@@ -274,6 +298,7 @@ fn handle_interrupt_or_exception(
             GuestException::PageFault => VmExitResult::AbortVm(AbortReason::UnexpectedPageFault),
         },
     }
+    */
 }
 
 /// Handles VM exit due to external interrupt, such as timer interrupt, or

@@ -10,6 +10,7 @@ use crate::{
 use alloc::boxed::Box;
 use core::ptr::addr_of;
 use log::trace;
+use log::warn;
 use x86::current::paging::BASE_PAGE_SHIFT;
 
 /// The representation of a virtual machine, made up of collection of registers,
@@ -168,19 +169,30 @@ impl Vm {
         let pdpte = self.walk_table(pdpt, pdpti);
 
         // Locate PD, index it, build PDe as needed
-        let pd = pdpte.next_table_mut();
-        let pde = self.walk_table(pd, pdi);
+        todo!("E#5-2");
+        // Instruction: Get nested PDE needed to translate the given `gpa`, that is:
+        //              1. From `pdpte`, locate the nest table `pd`.
+        //              2. Then, walk the `pd` with `pdi` to get `pde`.
+        //              (basically the same pattern as above)
+        // Hint: next_table_mut(), walk_table()
 
-        // Locate PT, index it, build PTe as needed
-        let pt = pde.next_table_mut();
-        let pte = &mut pt.entries[pti];
-        assert!(pte.0 == 0);
-
-        // Make it non-writable so that copy-on-write is done for dirty pages.
+        warn!("E#6-1");
+        // Instruction: Enable copy-on-write semantic by making pages non-writable
+        // Hint: NestedPagingStructureEntryType::RxWriteBack
         let flags = self
             .vt
-            .nps_entry_flags(NestedPagingStructureEntryType::RxWriteBack);
-        pte.set_translation(pa as u64, flags);
+            .nps_entry_flags(NestedPagingStructureEntryType::RwxWriteBack);
+
+        // Locate PT, index it, build PTe as needed
+        todo!("E#5-3");
+        // Instruction: Set translation from `gpa` to `pa` in the nested PTE,
+        //              that is:
+        //              1. From `pde`, locate the nest table `pt`.
+        //              2. Then, index `pt.entries` with `pti` and get a
+        //                 reference as `pte`.
+        //              3. Set a translation in `pte` to translate to `pa` with
+        //                 `flags`.
+        // Hint: next_table_mut(), set_translation(), flags
     }
 
     /// Updates nested paging translation for `gpa` to translate to a dirty page
