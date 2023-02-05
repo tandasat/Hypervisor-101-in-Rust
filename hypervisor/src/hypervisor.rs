@@ -12,8 +12,6 @@
 //! because the boot strap processor (ie, the processor 0) runs with 128KB of
 //! stack.
 
-use core::sync::atomic::Ordering;
-
 use crate::{
     config::GUEST_EXEC_TIMEOUT_IN_TSC,
     global_state::GlobalState,
@@ -27,6 +25,7 @@ use crate::{
     x86_instructions::rdtsc,
     Page,
 };
+use core::sync::atomic::Ordering;
 use log::{debug, error, info, trace, warn};
 use x86::current::paging::BASE_PAGE_SHIFT;
 

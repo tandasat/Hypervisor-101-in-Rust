@@ -1,6 +1,6 @@
 # UEFI applications
 - UEFI is a pre-OS environment, aka, BIOS
-- In our execution phase (called "DXE") is:
+- Our execution phase (called "DXE") is:
   - single threaded; no thread or process
   - ring-0 and long-mode
   - single flat address space

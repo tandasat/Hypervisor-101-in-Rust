@@ -29,6 +29,6 @@ The class materials are designed for an interactive classroom setting and less e
 
 
 ## Acknowledgements
-- Andrew Burkett (@drewkett) and Rich Seymour (@rseymour) for help about Rust
-- Karsten König and Amir Bazine for encouraging me looking into use hypervisors for fuzzing
-- Brandon Falk for his inspirational work, Falkvisor
+- Andrew Burkett (@drewkett) and Rich Seymour (@rseymour) for mentoring me about Rust
+- Karsten König (@gr4yf0x) and Amir Bazine for encouraging me looking into use of hypervisors for fuzzing
+- Brandon Falk (@gamozolabs) for his inspirational work, Falkvisor
