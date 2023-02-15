@@ -67,10 +67,10 @@ impl hardware_vt::HardwareVt for Svm {
         //  the host state-save area in main memory at the physical address
         //  specified in the VM_HSAVE_PA MSR".
         // See: 15.5.1 Basic Operation
-        todo!("E#2-1");
         // Instruction: Specify the address of the host state-save area into
         //              SVM_MSR_VM_HSAVE_PA.
         // Hint: addr_of!(), self.host_state, wrmsr(), SVM_MSR_VM_HSAVE_PA
+        wrmsr(SVM_MSR_VM_HSAVE_PA, addr_of!(self.host_state) as u64);
 
         // Intercept external interrupts, the PAUSE instruction and shutdown.
         // Additionally, intercept the VMRUN instruction which is a HW requirement.
