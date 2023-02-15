@@ -110,9 +110,9 @@ impl hardware_vt::HardwareVt for Svm {
 
         // Intercept #BP, #UD, #PF.
         // See: 15.12 Exception Intercepts
-        warn!("E#7-1");
         // Instruction: Intercept #UD happens in a guest using event intercept
         // Hint: intercept_exception field, and irq::INVALID_OPCODE_VECTOR
+        self.vmcb.control_area.intercept_exception = 1u32 << irq::INVALID_OPCODE_VECTOR;
 
         warn!("E#8-1");
         // Instruction: Intercept #BP on the top of #UD

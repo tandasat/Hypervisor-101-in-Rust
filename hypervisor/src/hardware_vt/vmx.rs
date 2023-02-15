@@ -259,10 +259,9 @@ impl hardware_vt::HardwareVt for Vmx {
 
         // Intercept #BP, #UD, #PF.
         // See: 25.6.3 Exception Bitmap
-        warn!("E#7-1");
         // Instruction: Intercept #UD happens in a guest using event intercept
         // Hint: vmwrite(), vmcs::control::EXCEPTION_BITMAP, irq::INVALID_OPCODE_VECTOR
-
+        vmwrite(vmcs::control::EXCEPTION_BITMAP, 1u64 << irq::INVALID_OPCODE_VECTOR);
         warn!("E#8-1");
         // Instruction: Intercept #BP on the top of #UD
         // Hint: irq::BREAKPOINT_VECTOR

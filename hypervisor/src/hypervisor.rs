@@ -256,14 +256,11 @@ fn handle_interrupt_or_exception(
     stats: &mut RunStats,
     qualification: &ExceptionQualification,
 ) -> VmExitResult {
-    todo!("E#7-2");
     // Instruction: Comment out this todo!(). Make sense of execution flow to reach
     //              here. What VM exit code was observed at the vmx.rs or svm.rs
     //              level?
-    /*
     assert!(qualification.exception_code == GuestException::InvalidOpcode);
     return VmExitResult::AbortVm(AbortReason::EndMarker);
-    */
 
     todo!("E#8-2");
     // Instruction: 1. Comment out the above two lines.
