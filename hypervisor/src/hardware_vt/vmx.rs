@@ -68,9 +68,9 @@ impl hardware_vt::HardwareVt for Vmx {
         // "Before system software can enter VMX operation, it enables VMX by
         //  setting CR4.VMXE[bit 13] = 1."
         // See: 24.7 ENABLING AND ENTERING VMX OPERATION
-        todo!("E#1-1");
         // Instruction: Enable VMX by setting the VMXE bit in CR4.
         // Hint: cr4(), cr4_write(), Cr4::CR4_ENABLE_VMX
+        cr4_write(cr4() | Cr4::CR4_ENABLE_VMX);
 
         // Prepare for entering VMX operation by executing the VMXON instruction.
         // To enter VMX operation, several requirements must be met or the
@@ -104,11 +104,13 @@ impl hardware_vt::HardwareVt for Vmx {
         // "Software can discover the VMCS revision identifier that a processor
         //  uses by reading the VMX capability MSR IA32_VMX_BASIC (see Appendix A.1)."
         // See: 25.2 FORMAT OF THE VMCS REGION
-        todo!("E#1-2");
         // Instruction: Set the revision ID in the VMXON region and execute the
         //              VMXON instruction.
         // Hint: rdmsr(), x86::msr::IA32_VMX_BASIC,
         //       self.vmxon_region and vmxon()
+        let revision_id = rdmsr(x86::msr::IA32_VMX_BASIC) as u32;
+        self.vmxon_region.revision_id = revision_id;
+        vmxon(&mut self.vmxon_region);
     }
 
     /// Configures VMX. We intercept #BP, #UD, #PF, enable VMX-preemption timer

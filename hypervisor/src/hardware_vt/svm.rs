@@ -44,9 +44,9 @@ impl hardware_vt::HardwareVt for Svm {
 
         // Enable SVM. We assume the processor is compatible with this.
         // See: 15.4 Enabling SVM
-        todo!("E#1-1");
         // Instruction: Enable SVM by setting the SVME bit in IA32_EFER.
         // Hint: rdmsr(), wrmsr(), x86::msr::IA32_EFER and EFER_SVME
+        wrmsr(x86::msr::IA32_EFER, rdmsr(x86::msr::IA32_EFER) | EFER_SVME);
     }
 
     /// Configures SVM. We intercept #BP, #UD, #PF, external interrupt, the
