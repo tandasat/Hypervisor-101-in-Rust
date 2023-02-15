@@ -102,10 +102,11 @@ impl hardware_vt::HardwareVt for Svm {
         // - Setting the base address of the nested PML4
         //
         // See: 15.25.3 Enabling Nested Paging
-        warn!("E#4-1");
         // Instruction: Enable NPT.
         // Hint: ncr3 and np_enable fields, and SVM_NP_ENABLE_NP_ENABLE,
         //       nested_pml4_addr
+        self.vmcb.control_area.np_enable = SVM_NP_ENABLE_NP_ENABLE;
+        self.vmcb.control_area.ncr3 = nested_pml4_addr;
 
         // Intercept #BP, #UD, #PF.
         // See: 15.12 Exception Intercepts

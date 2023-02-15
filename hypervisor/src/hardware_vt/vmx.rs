@@ -242,7 +242,6 @@ impl hardware_vt::HardwareVt for Vmx {
         //   for accessing to any of EPT paging-structures. This is most efficient.
         // See: 29.2.2 EPT Translation Mechanism
         // See: 29.2.6.1 Memory Type Used for Accessing EPT Paging Structures
-        warn!("E#4-1");
         // Instruction: (1) Enable EPT and (2) write a EPT pointer value to point to
         //              base address of the EPT (EPT PML4).
         // Hint: (1) IA32_VMX_PROCBASED_CTLS2_ENABLE_EPT_FLAG
@@ -250,7 +249,12 @@ impl hardware_vt::HardwareVt for Vmx {
         //           EPT_POINTER_PAGE_WALK_LENGTH_4, EPT_POINTER_MEMORY_TYPE_WRITE_BACK
         vmwrite(
             vmcs::control::SECONDARY_PROCBASED_EXEC_CONTROLS,
-            adjust_vmx_control(VmxControl::ProcessorBased2, 0),
+            adjust_vmx_control(VmxControl::ProcessorBased2, 
+            IA32_VMX_PROCBASED_CTLS2_ENABLE_EPT_FLAG),
+        );
+        vmwrite(
+            vmcs::control::EPTP_FULL,
+            nested_pml4_addr | EPT_POINTER_PAGE_WALK_LENGTH_4 | EPT_POINTER_MEMORY_TYPE_WRITE_BACK,
         );
 
         // Intercept #BP, #UD, #PF.
