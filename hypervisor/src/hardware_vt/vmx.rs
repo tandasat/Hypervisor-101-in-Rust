@@ -311,9 +311,15 @@ impl hardware_vt::HardwareVt for Vmx {
         vmwrite(vmcs::guest::IA32_SYSENTER_CS, registers.sysenter_cs);
         vmwrite(vmcs::guest::IA32_SYSENTER_ESP, registers.sysenter_esp);
         vmwrite(vmcs::guest::IA32_SYSENTER_EIP, registers.sysenter_eip);
-        todo!("E#3-1");
         // Instruction: Configure guest IA32_EFER, CR0, CR3, CR4, RIP, RSP and RLAGS
         //              fields with values in the snapshot.
+        vmwrite(vmcs::guest::IA32_EFER_FULL, registers.efer);
+        vmwrite(vmcs::guest::CR0, registers.cr0);
+        vmwrite(vmcs::guest::CR3, registers.cr3);
+        vmwrite(vmcs::guest::CR4, registers.cr4);
+        vmwrite(vmcs::guest::RIP, registers.rip);
+        vmwrite(vmcs::guest::RSP, registers.rsp);
+        vmwrite(vmcs::guest::RFLAGS, registers.rflags);
         vmwrite(vmcs::guest::LINK_PTR_FULL, u64::MAX);
 
         // Set VMX-preemption timer counter if the processor supports it. Convert
@@ -330,9 +336,23 @@ impl hardware_vt::HardwareVt for Vmx {
 
         // Some registers are not managed by VMCS and needed to be manually saved
         // and loaded by software. General purpose registers are such examples.
-        todo!("E#3-2");
         // Instruction: Initialize the `self.registers` using values in the
         //              snapshot.
+        self.registers.rax = registers.rax;
+        self.registers.rbx = registers.rbx;
+        self.registers.rcx = registers.rcx;
+        self.registers.rdx = registers.rdx;
+        self.registers.rdi = registers.rdi;
+        self.registers.rsi = registers.rsi;
+        self.registers.rbp = registers.rbp;
+        self.registers.r8 = registers.r8;
+        self.registers.r9 = registers.r9;
+        self.registers.r10 = registers.r10;
+        self.registers.r11 = registers.r11;
+        self.registers.r12 = registers.r12;
+        self.registers.r13 = registers.r13;
+        self.registers.r14 = registers.r14;
+        self.registers.r15 = registers.r15;
     }
 
     /// Updates the guest states to have the guest use input data.

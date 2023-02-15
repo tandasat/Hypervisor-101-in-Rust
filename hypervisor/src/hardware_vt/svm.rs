@@ -168,11 +168,17 @@ impl hardware_vt::HardwareVt for Svm {
         self.vmcb.state_save_area.sysenter_cs = registers.sysenter_cs;
         self.vmcb.state_save_area.sysenter_esp = registers.sysenter_esp;
         self.vmcb.state_save_area.sysenter_eip = registers.sysenter_eip;
-        todo!("E#3-1");
         // Instruction: Configure guest EFER, CR0, CR3, CR4, RIP, RSP and RLAGS
         //              fields with values in the snapshot.
         // Hint: the sample snapshot is taken on Intel. Some register values need
         //       adjustments. Inspect Bochs logs as you encounter errors.
+        self.vmcb.state_save_area.efer = registers.efer | EFER_SVME;
+        self.vmcb.state_save_area.cr0 = registers.cr0;
+        self.vmcb.state_save_area.cr3 = registers.cr3;
+        self.vmcb.state_save_area.cr4 = registers.cr4 & !CR4_VMXE;
+        self.vmcb.state_save_area.rip = registers.rip;
+        self.vmcb.state_save_area.rsp = registers.rsp;
+        self.vmcb.state_save_area.rflags = registers.rflags;
         self.vmcb.state_save_area.rax = registers.rax;
         self.vmcb.state_save_area.gpat = rdmsr(x86::msr::IA32_PAT); // FIXME; use snapshot
 
@@ -180,9 +186,22 @@ impl hardware_vt::HardwareVt for Svm {
         // and loaded by software. General purpose registers are such examples.
         //
         // Note that RAX is managed within VMCB. See `StateSaveArea` and just above.
-        todo!("E#3-2");
         // Instruction: Initialize the `self.registers` using values in the
         //              snapshot.
+        self.registers.rbx = registers.rbx;
+        self.registers.rcx = registers.rcx;
+        self.registers.rdx = registers.rdx;
+        self.registers.rdi = registers.rdi;
+        self.registers.rsi = registers.rsi;
+        self.registers.rbp = registers.rbp;
+        self.registers.r8 = registers.r8;
+        self.registers.r9 = registers.r9;
+        self.registers.r10 = registers.r10;
+        self.registers.r11 = registers.r11;
+        self.registers.r12 = registers.r12;
+        self.registers.r13 = registers.r13;
+        self.registers.r14 = registers.r14;
+        self.registers.r15 = registers.r15;
     }
 
     /// Updates the guest states to have the guest use input data.
