@@ -8,4 +8,4 @@ copy -q fs1:rhv.efi rhv.efi
 # Run rhv.efi.
 # E#7-3: Use snapshot_patch_end_marker.json
 # E#8-3: Use snapshot_patch.json
-rhv.efi snapshot.img snapshot_patch_end_marker.json corpus
+rhv.efi snapshot.img snapshot_patch.json corpus

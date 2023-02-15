@@ -114,9 +114,11 @@ impl hardware_vt::HardwareVt for Svm {
         // Hint: intercept_exception field, and irq::INVALID_OPCODE_VECTOR
         self.vmcb.control_area.intercept_exception = 1u32 << irq::INVALID_OPCODE_VECTOR;
 
-        warn!("E#8-1");
         // Instruction: Intercept #BP on the top of #UD
         // Hint: irq::BREAKPOINT_VECTOR
+        self.vmcb.control_area.intercept_exception = (1u32 << irq::BREAKPOINT_VECTOR)
+            | (1u32 << irq::INVALID_OPCODE_VECTOR)
+            | (1u32 << irq::PAGE_FAULT_VECTOR);
     }
 
     /// Configures the guest states based on the snapshot.

@@ -262,9 +262,15 @@ impl hardware_vt::HardwareVt for Vmx {
         // Instruction: Intercept #UD happens in a guest using event intercept
         // Hint: vmwrite(), vmcs::control::EXCEPTION_BITMAP, irq::INVALID_OPCODE_VECTOR
         vmwrite(vmcs::control::EXCEPTION_BITMAP, 1u64 << irq::INVALID_OPCODE_VECTOR);
-        warn!("E#8-1");
+
         // Instruction: Intercept #BP on the top of #UD
         // Hint: irq::BREAKPOINT_VECTOR
+        vmwrite(
+            vmcs::control::EXCEPTION_BITMAP,
+            (1u64 << irq::BREAKPOINT_VECTOR)
+                | (1u64 << irq::INVALID_OPCODE_VECTOR)
+                | (1u64 << irq::PAGE_FAULT_VECTOR),
+        );
     }
 
     /// Configures the guest states based on the snapshot.
