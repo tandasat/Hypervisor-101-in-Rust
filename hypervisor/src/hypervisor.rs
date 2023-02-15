@@ -198,13 +198,15 @@ fn handle_nested_page_fault(
     // Then, copy current contents of memory at `pa` to the new dirty page. This
     // effectively isolate the effect of memory write into this current guest.
     // Failure of copy-on-write warrants aborting the VM.
-    warn!("E#6-2");
     // Instruction: Enable copy-on-write semantic by
     //              1. updating nested translation for `gpa` to use separate
     //                 dirty pages, then
     //              2. copying current contents of the PA that maps `gpa` into
     //                 the dirty page selected
     // Use: qualification.write_access, vm.copy_on_write()
+    if qualification.write_access && !vm.copy_on_write(gpa, pa) {
+        return VmExitResult::AbortVm(AbortReason::ExcessiveMemoryWrite);
+    }
 
     // Since we changed nested paging structure entries, cache invalidation may be
     // required.
