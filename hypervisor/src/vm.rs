@@ -169,12 +169,13 @@ impl Vm {
         let pdpte = self.walk_table(pdpt, pdpti);
 
         // Locate PD, index it, build PDe as needed
-        todo!("E#5-2");
         // Instruction: Get nested PDE needed to translate the given `gpa`, that is:
         //              1. From `pdpte`, locate the nest table `pd`.
         //              2. Then, walk the `pd` with `pdi` to get `pde`.
         //              (basically the same pattern as above)
         // Hint: next_table_mut(), walk_table()
+        let pd = pdpte.next_table_mut();
+        let pde = self.walk_table(pd, pdi);
 
         warn!("E#6-1");
         // Instruction: Enable copy-on-write semantic by making pages non-writable
@@ -184,7 +185,6 @@ impl Vm {
             .nps_entry_flags(NestedPagingStructureEntryType::RwxWriteBack);
 
         // Locate PT, index it, build PTe as needed
-        todo!("E#5-3");
         // Instruction: Set translation from `gpa` to `pa` in the nested PTE,
         //              that is:
         //              1. From `pde`, locate the nest table `pt`.
@@ -193,6 +193,10 @@ impl Vm {
         //              3. Set a translation in `pte` to translate to `pa` with
         //                 `flags`.
         // Hint: next_table_mut(), set_translation(), flags
+        let pt = pde.next_table_mut();
+        let pte = &mut pt.entries[pti];
+        assert!(pte.0 == 0);
+        pte.set_translation(pa as u64, flags);
     }
 
     /// Updates nested paging translation for `gpa` to translate to a dirty page

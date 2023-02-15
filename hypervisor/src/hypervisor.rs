@@ -188,9 +188,8 @@ fn handle_nested_page_fault(
     // by one VM would be visible from other VMs. We enforces this restriction
     // via copy-on-write mechanism (see below).
     if qualification.missing_translation {
-        todo!("E#5-1");
         // Instruction: Uncomment and complete implementation of it.
-        //vm.build_translation(gpa, pa);
+        vm.build_translation(gpa, pa);
     }
 
     // If this is a write memory access, trigger copy-on-write. That is, with
