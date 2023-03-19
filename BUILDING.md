@@ -67,7 +67,7 @@ On VSCode, the `cargo build` task is also available.
         ```
     - On Ubuntu and Windows
         ```shell
-        sudo apt install ovmf vgabios gcc g++ make
+        sudo apt install ovmf vgabios
         cd Bochs/bochs
         sh .conf.linux
         make
@@ -95,7 +95,7 @@ On VSCode, the `cargo build` task is also available.
 On VSCode, the `cargo xtask bochs-intel` and `cargo xtask bochs-amd` tasks are also available.
 
 
-## Testing with VMware
+## Testing with VMware (optional for the course)
 Prerequisite software:
 - On macOS
   - VMware Fusion Pro
@@ -112,5 +112,5 @@ Prerequisite software:
 On VSCode, the `cargo xtask vmware` task is also available.
 
 
-## Testing with bare metal
+## Testing with bare metal (optional for the course)
 To test on bare metal, have a device with serial output. Copy `rhv.efi`, the snapshot, patch, and corpus files into a FAT32 formatted USB thumb drive. Then, boot the test device, start the UEFI shell, and start the `rhv.efi`.
