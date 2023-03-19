@@ -12,6 +12,6 @@ readme.workspace = true
 
 [dependencies]
 cfg-if = "1.0"
-clap = { version = "4.0", features = ["derive"] }
+clap = { version = "4.1", features = ["derive"] }
 ctrlc = "3.2"
 wsl = "0.1"
