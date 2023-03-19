@@ -7,7 +7,7 @@ Read the course at https://tandasat.github.io/Hypervisor-101-in-Rust/
 ## Directory structure
 - 📖[course/](course/) for the class materials
 - 🦀[hypervisor/](hypervisor/) for source code and a detailed description of the fuzzing hypervisor
-- ⚙️[BUILDING.md](BUILDING.md) for building and funning the hypervisor with sample files under [tests/](tests/)
+- ⚙️[BUILDING.md](BUILDING.md) for building and running the hypervisor with sample files under [tests/](tests/)
 
 
 ## Course format
