@@ -25,6 +25,9 @@
   - The `Remote Development` VSCode extension
   - Note: all commands below should be executed within WSL unless otherwise stated. This includes VSCode. It must be started _from the WSL shell_, not from the Windows native command prompt. Workflow on native Windows is possible but not documented since WSL is still required.
 
+- On Arch Linux
+  - Run the command below to get all the dependencies and follow the build and test process for Ubuntu
+  - ``` sudo pacman -S seabios edk2-ovmf readline base-devel ; sudo cp /usr/share/ovmf/x64/OVMF.fd /usr/share/ovmf ```
 
 ## Building
 1. Install Rust, UEFI target support as well as other dependencies required for Rust.
