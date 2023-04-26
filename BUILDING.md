@@ -3,8 +3,8 @@
   - [Prerequisite software](#prerequisite-software)
   - [Building](#building)
   - [Testing with Bochs](#testing-with-bochs)
-  - [Testing with VMware](#testing-with-vmware)
-  - [Testing with bare metal](#testing-with-bare-metal)
+  - [Testing with VMware (optional for the course)](#testing-with-vmware-optional-for-the-course)
+  - [Testing with bare metal (optional for the course)](#testing-with-bare-metal-optional-for-the-course)
 
 
 ## Prerequisite software
@@ -105,12 +105,21 @@ Prerequisite software:
 - On Windows and Ubuntu
   - VMware Workstation Pro
 
-1. Build and run the hypervisor on VMware.
+1. Install dependencies.
+    - On macOS
+      ```shell
+      brew install cdrtools
+      ```
+    - On Ubuntu and Windows
+      ```shell
+      sudo apt install genisoimage
+      ```
+2. Build and run the hypervisor on VMware.
     ```shell
     cd ~/Hypervisor-101-in-Rust/
     cargo xtask vmware
     ```
-2. When VMware starts and shows a boot option, select "EFI Internal Shell (Unsupported option)".
+3. When VMware starts and shows a boot option, select "EFI Internal Shell (Unsupported option)".
 
 On VSCode, the `cargo xtask vmware` task is also available.
 
