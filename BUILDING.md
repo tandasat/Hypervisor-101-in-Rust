@@ -105,7 +105,8 @@ Prerequisite software:
 - On Windows and Ubuntu
   - VMware Workstation Pro
 
-1. Install dependencies.
+1. (Windows-only) Hyper-V needs to be disabled to run the VMware VM. See [#7](https://github.com/tandasat/Hypervisor-101-in-Rust/issues/7) for the details.
+2. Install dependencies.
     - On macOS
       ```shell
       brew install cdrtools
@@ -114,12 +115,12 @@ Prerequisite software:
       ```shell
       sudo apt install genisoimage
       ```
-2. Build and run the hypervisor on VMware.
+3. Build and run the hypervisor on VMware.
     ```shell
     cd ~/Hypervisor-101-in-Rust/
     cargo xtask vmware
     ```
-3. When VMware starts and shows a boot option, select "EFI Internal Shell (Unsupported option)".
+4. When VMware starts and shows a boot option, select "EFI Internal Shell (Unsupported option)".
 
 On VSCode, the `cargo xtask vmware` task is also available.
 
