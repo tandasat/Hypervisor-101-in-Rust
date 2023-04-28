@@ -7,6 +7,8 @@ This directory contains multiple files for testing. For building, installing and
 
 `ida_highlight_coverage.py` is to highlight basic blocks that were executed by a fuzzing session. To use this script, run a fuzzing session and specify its serial log file as input of this script. `ida_reset_highlight.py` is to reset highlighting.
 
+For `refind_x64_signed_at_0xDD15000.efi`, the image needs to be rebased onto 0xDD15000 on IDA before running those scripts.
+
 ![](ida_coverage.png)
 
 

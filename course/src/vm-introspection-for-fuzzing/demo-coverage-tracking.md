@@ -4,4 +4,4 @@
   - Generating a patch file using an IDA Python `tests/ida_generate_patch.py`
   - Gathering coverage info from output
   - Visualizing coverage using an IDA Python `tests/ida_highlight_coverage.py`
-    ![](../tests/ida_coverage.png)
+    ![](demo-coverage-tracking.gif)
