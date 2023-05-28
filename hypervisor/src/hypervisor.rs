@@ -99,7 +99,7 @@ fn start_vm(
         .adjust_registers(global.corpus().input_data_gva(), mutation_engine.current_input.size());
 
     // Run the VM until it reaches one of abort conditions.
-    let mut stats = &mut RunStats::new();
+    let stats = &mut RunStats::new();
     loop {
         // Run the VM until VM exit happens.
         let exit_reason = vm.vt.run();

@@ -38,7 +38,7 @@ impl TestVm for Bochs {
             let reader = BufReader::new(output.stdout.unwrap());
             reader
                 .lines()
-                .filter_map(std::result::Result::ok)
+                .map_while(std::result::Result::ok)
                 .for_each(|line| {
                     println!("{:>4}: {line}\r", now.elapsed().unwrap_or_default().as_secs());
                 });
@@ -67,7 +67,7 @@ impl TestVm for Bochs {
             let reader = BufReader::new(output.stdout.unwrap());
             reader
                 .lines()
-                .filter_map(std::result::Result::ok)
+                .map_while(std::result::Result::ok)
                 .for_each(|line| println!("{line}\r"));
         });
 
