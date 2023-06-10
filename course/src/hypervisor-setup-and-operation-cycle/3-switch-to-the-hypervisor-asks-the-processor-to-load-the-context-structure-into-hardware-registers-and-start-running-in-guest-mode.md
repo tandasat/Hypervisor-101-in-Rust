@@ -9,4 +9,4 @@
   4. starts execution
 - This host-to-guest-mode transition is called:
   - Intel: VM-entry 📖CHAPTER 27 VM ENTRIES
-  - AMD: World switch to guest 📖 15.5.1 Basic Operation
+  - AMD: World switch to guest 📖15.5.1 Basic Operation

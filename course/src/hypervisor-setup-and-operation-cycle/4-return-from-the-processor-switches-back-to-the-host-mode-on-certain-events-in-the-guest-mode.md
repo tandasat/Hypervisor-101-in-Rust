@@ -10,9 +10,9 @@
   - AMD: #VMEXIT 📖15.6 #VMEXIT
   - We call it as "VM exit"
 - Note that guest uses actual registers and actually runs instructions on a processor.
-  - There is no "virtual register" or "virtual processor" in a strict senses.
-  - HW VT is a mechanism to perform world switches.
-    - Akin to task/process context switching
+  - There is no "virtual register" or "virtual processor".
+  - HW VT is a mechanism to perform world switches, ie, changing actual register values.
+    - Akin to task/process context switching:
       - VMCS/VMCB = "task/process" struct
       - `VMLAUNCH`/`VMRESUME`/`VMRUN` = context switch to a task
       - VM-exit/#VMEXIT = preempting the task
