@@ -2,7 +2,7 @@
 - Certain events are intercepted by the hypervisor
 - On that event, the processor:
   1. saves the current register values into the context structure
-  2. loads the previously saved register values from memory
+  2. loads the previously saved register values from a host-state area
   3. changes the processor mode to the host-mode
   4. starts execution
 - This guest-to-host-mode transition is called:
