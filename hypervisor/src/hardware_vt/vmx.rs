@@ -839,7 +839,7 @@ impl fmt::Debug for Vmcs {
         .field("Guest interrupt status                         ", &vmread(vmcs::guest::INTERRUPT_STATUS))
         .field("PML index                                      ", &vmread(vmcs::guest::PML_INDEX))
 
-        // 64-Bit Guest-State Fields&
+        // 64-Bit Guest-State Fields
         .field("VMCS link pointer                              ", &vmread(vmcs::guest::LINK_PTR_FULL))
         .field("Guest IA32_DEBUGCTL                            ", &vmread(vmcs::guest::IA32_DEBUGCTL_FULL))
         .field("Guest IA32_PAT                                 ", &vmread(vmcs::guest::IA32_PAT_FULL))
@@ -852,7 +852,7 @@ impl fmt::Debug for Vmcs {
         .field("Guest IA32_BNDCFGS                             ", &vmread(vmcs::guest::IA32_BNDCFGS_FULL))
         .field("Guest IA32_RTIT_CTL                            ", &vmread(vmcs::guest::IA32_RTIT_CTL_FULL))
 
-        // 32-Bit Guest-State Fields&
+        // 32-Bit Guest-State Fields
         .field("Guest ES Limit                                 ", &vmread(vmcs::guest::ES_LIMIT))
         .field("Guest CS Limit                                 ", &vmread(vmcs::guest::CS_LIMIT))
         .field("Guest SS Limit                                 ", &vmread(vmcs::guest::SS_LIMIT))
@@ -877,7 +877,7 @@ impl fmt::Debug for Vmcs {
         .field("Guest IA32_SYSENTER_CS                         ", &vmread(vmcs::guest::IA32_SYSENTER_CS))
         .field("VMX-preemption timer value                     ", &vmread(vmcs::guest::VMX_PREEMPTION_TIMER_VALUE))
 
-        // Natural-Width Guest-State Fields&
+        // Natural-Width Guest-State Fields
         .field("Guest CR0                                      ", &vmread(vmcs::guest::CR0))
         .field("Guest CR3                                      ", &vmread(vmcs::guest::CR3))
         .field("Guest CR4                                      ", &vmread(vmcs::guest::CR4))
@@ -899,7 +899,7 @@ impl fmt::Debug for Vmcs {
         .field("Guest IA32_SYSENTER_ESP                        ", &vmread(vmcs::guest::IA32_SYSENTER_ESP))
         .field("Guest IA32_SYSENTER_EIP                        ", &vmread(vmcs::guest::IA32_SYSENTER_EIP))
 
-        // 16-Bit Host-State Fields&
+        // 16-Bit Host-State Fields
         .field("Host ES Selector                               ", &vmread(vmcs::host::ES_SELECTOR))
         .field("Host CS Selector                               ", &vmread(vmcs::host::CS_SELECTOR))
         .field("Host SS Selector                               ", &vmread(vmcs::host::SS_SELECTOR))
@@ -908,15 +908,15 @@ impl fmt::Debug for Vmcs {
         .field("Host GS Selector                               ", &vmread(vmcs::host::GS_SELECTOR))
         .field("Host TR Selector                               ", &vmread(vmcs::host::TR_SELECTOR))
 
-        // 64-Bit Host-State Fields&
+        // 64-Bit Host-State Fields
         .field("Host IA32_PAT                                  ", &vmread(vmcs::host::IA32_PAT_FULL))
         .field("Host IA32_EFER                                 ", &vmread(vmcs::host::IA32_EFER_FULL))
         .field("Host IA32_PERF_GLOBAL_CTRL                     ", &vmread(vmcs::host::IA32_PERF_GLOBAL_CTRL_FULL))
 
-        // 32-Bit Host-State Fields&
+        // 32-Bit Host-State Fields
         .field("Host IA32_SYSENTER_CS                          ", &vmread(vmcs::host::IA32_SYSENTER_CS))
 
-        // Natural-Width Host-State Fields&
+        // Natural-Width Host-State Fields
         .field("Host CR0                                       ", &vmread(vmcs::host::CR0))
         .field("Host CR3                                       ", &vmread(vmcs::host::CR3))
         .field("Host CR4                                       ", &vmread(vmcs::host::CR4))
@@ -930,12 +930,12 @@ impl fmt::Debug for Vmcs {
         .field("Host RSP                                       ", &vmread(vmcs::host::RSP))
         .field("Host RIP                                       ", &vmread(vmcs::host::RIP))
 
-        // 16-Bit Control Fields&
+        // 16-Bit Control Fields
         .field("Virtual-processor identifier                   ", &vmread(vmcs::control::VPID))
         .field("Posted-interrupt notification vector           ", &vmread(vmcs::control::POSTED_INTERRUPT_NOTIFICATION_VECTOR))
         .field("EPTP index                                     ", &vmread(vmcs::control::EPTP_INDEX))
 
-        // 64-Bit Control Fields&
+        // 64-Bit Control Fields
         .field("Address of I/O bitmap A                        ", &vmread(vmcs::control::IO_BITMAP_A_ADDR_FULL))
         .field("Address of I/O bitmap B                        ", &vmread(vmcs::control::IO_BITMAP_B_ADDR_FULL))
         .field("Address of MSR bitmaps                         ", &vmread(vmcs::control::MSR_BITMAPS_ADDR_FULL))
@@ -963,7 +963,7 @@ impl fmt::Debug for Vmcs {
         .field("Sub-page-permission-table pointer              ", &vmread(vmcs::control::SUBPAGE_PERM_TABLE_PTR_FULL))
         .field("TSC multiplier                                 ", &vmread(vmcs::control::TSC_MULTIPLIER_FULL))
 
-        // 32-Bit Control Fields&
+        // 32-Bit Control Fields
         .field("Pin-based VM-execution controls                ", &vmread(vmcs::control::PINBASED_EXEC_CONTROLS))
         .field("Primary processor-based VM-execution controls  ", &vmread(vmcs::control::PRIMARY_PROCBASED_EXEC_CONTROLS))
         .field("Exception bitmap                               ", &vmread(vmcs::control::EXCEPTION_BITMAP))
@@ -983,7 +983,7 @@ impl fmt::Debug for Vmcs {
         .field("PLE_Gap                                        ", &vmread(vmcs::control::PLE_GAP))
         .field("PLE_Window                                     ", &vmread(vmcs::control::PLE_WINDOW))
 
-        // Natural-Width Control Fields&
+        // Natural-Width Control Fields
         .field("CR0 guest/host mask                            ", &vmread(vmcs::control::CR0_GUEST_HOST_MASK))
         .field("CR4 guest/host mask                            ", &vmread(vmcs::control::CR4_GUEST_HOST_MASK))
         .field("CR0 read shadow                                ", &vmread(vmcs::control::CR0_READ_SHADOW))
@@ -993,12 +993,12 @@ impl fmt::Debug for Vmcs {
         .field("CR3-target value 2                             ", &vmread(vmcs::control::CR3_TARGET_VALUE2))
         .field("CR3-target value 3                             ", &vmread(vmcs::control::CR3_TARGET_VALUE3))
 
-        // 16-Bit Read-Only Data Fields&
+        // 16-Bit Read-Only Data Fields
 
-        // 64-Bit Read-Only Data Fields&
+        // 64-Bit Read-Only Data Fields
         .field("Guest-physical address                         ", &vmread(vmcs::ro::GUEST_PHYSICAL_ADDR_FULL))
 
-        // 32-Bit Read-Only Data Fields&
+        // 32-Bit Read-Only Data Fields
         .field("VM-instruction error                           ", &vmread(vmcs::ro::VM_INSTRUCTION_ERROR))
         .field("Exit reason                                    ", &vmread(vmcs::ro::EXIT_REASON))
         .field("VM-exit interruption information               ", &vmread(vmcs::ro::VMEXIT_INTERRUPTION_INFO))
@@ -1008,13 +1008,13 @@ impl fmt::Debug for Vmcs {
         .field("VM-exit instruction length                     ", &vmread(vmcs::ro::VMEXIT_INSTRUCTION_LEN))
         .field("VM-exit instruction information                ", &vmread(vmcs::ro::VMEXIT_INSTRUCTION_INFO))
 
-        // Natural-Width Read-Only Data Fields&
+        // Natural-Width Read-Only Data Fields
         .field("Exit qualification                             ", &vmread(vmcs::ro::EXIT_QUALIFICATION))
         .field("I/O RCX                                        ", &vmread(vmcs::ro::IO_RCX))
         .field("I/O RSI                                        ", &vmread(vmcs::ro::IO_RSI))
         .field("I/O RDI                                        ", &vmread(vmcs::ro::IO_RDI))
         .field("I/O RIP                                        ", &vmread(vmcs::ro::IO_RIP))
         .field("Guest-linear address                           ", &vmread(vmcs::ro::GUEST_LINEAR_ADDR))
-        .finish()
+        .finish_non_exhaustive()
     }
 }
