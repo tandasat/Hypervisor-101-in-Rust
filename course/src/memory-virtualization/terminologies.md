@@ -4,7 +4,7 @@
   - Intel: EPT is enabled
   - AMD: Nested paging (also referred to as Rapid Virtualization Indexing, RVI) is enabled
   - Nested paging is also referred to as second level address translation (SLAT)
-- Nested paging structures(s) - the data structures describing translation with nested paging
+- Nested paging structures - the data structures describing translation with nested paging
   - Intel: Extended page table(s)
   - AMD: Nested page tables(s)
 - Nested page fault - translation fault at the nested paging level
