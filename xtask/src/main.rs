@@ -43,6 +43,7 @@
     rustdoc::private_doc_tests,
     rustdoc::invalid_html_tags,
 )]
+#![allow(clippy::multiple_crate_versions)]
 
 use bochs::{Bochs, Cpu};
 use clap::{Parser, Subcommand};

@@ -2,7 +2,6 @@
 #![no_main]
 #![no_std]
 #![feature(core_intrinsics)]
-#![feature(negative_impls)]
 #![feature(new_uninit)]
 #![feature(panic_info_message)]
 #![warn(
@@ -45,6 +44,7 @@
     rustdoc::invalid_html_tags,
 )]
 #![allow(clippy::cast_possible_truncation)]
+#![allow(clippy::multiple_crate_versions)]
 
 #[cfg(not(target_pointer_width = "64"))]
 compile_error!("This project must target the 64bit-width pointer environment.");

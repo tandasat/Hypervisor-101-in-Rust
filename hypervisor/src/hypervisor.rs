@@ -162,7 +162,7 @@ fn start_vm(
 fn handle_nested_page_fault(
     vm: &mut Vm,
     global: &GlobalState,
-    mutation_engine: &mut MutationEngine,
+    mutation_engine: &MutationEngine,
     qualification: &NestedPageFaultQualification,
 ) -> VmExitResult {
     if global.iter_count() == 0 {
@@ -171,8 +171,8 @@ fn handle_nested_page_fault(
 
     // Resolve a PA that maps or will map the GPA that the guest tried to access.
     // This works as follows:
-    // 1. If the GPA is within the snapshot, the GPA should be backed by a page
-    //    in the snapshot.
+    // 1. If the GPA is within the snapshot, the GPA should be backed by a page in
+    //    the snapshot.
     // 2. If the GPA is outside the snapshot but within the input data pages, the
     //    GPA should be backed by the input data pages.
     let gpa = qualification.gpa as usize;
