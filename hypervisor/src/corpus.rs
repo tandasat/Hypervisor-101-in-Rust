@@ -35,19 +35,19 @@ pub(crate) struct InputFile {
 #[derive(Debug)]
 pub(crate) struct Corpus {
     /// The list of immutable input files.
-    input_files: RwLock<Vec<InputFile>>,
+    files: RwLock<Vec<InputFile>>,
     /// The base address of the input data pages in guest VA.
     ///
     /// This address is made up by the hypervisor and contains mutated input
     /// data. The guest registers are adjusted to refer to this region for
     /// input to parse.
-    input_data_gva: u64,
+    data_gva: u64,
     /// The range of the input data pages in PA.
     ///
     /// This size equals to the size of biggest input file in the corpus,
     /// rounded up to the 4KB granularity. For example, if the biggest input
     /// is 4100 bytes, this will be 2 page-size.
-    input_data_pages: Range<usize>,
+    data_pages: Range<usize>,
 }
 
 impl Corpus {
@@ -80,11 +80,11 @@ impl Corpus {
         //      | Snapshot page[n]    |    << End of original guest physical memory
         //      +---------------------+
         //      | (Inaccessible page) |
-        //      +---------------------+    << self.input_data_gva
+        //      +---------------------+    << self.data_gva
         //      | Input data page[0]  |  \
         //      +---------------------+   \
         //      |                     |    |
-        //        ~~~~~~~~~~~~~~~~~~~      +< self.input_data_pages
+        //        ~~~~~~~~~~~~~~~~~~~      +< self.data_pages
         //      |                     |    |
         //      +---------------------+   /
         //      | Input data page[n]  |  /
@@ -95,27 +95,27 @@ impl Corpus {
         let input_data_page_first = snapshot.memory.len() + 1;
         let input_data_page_end = input_data_page_first + size_in_pages;
         Ok(Self {
-            input_files: RwLock::new(input_files),
-            input_data_gva: (input_data_page_first << BASE_PAGE_SHIFT) as u64,
-            input_data_pages: input_data_page_first..input_data_page_end,
+            files: RwLock::new(input_files),
+            data_gva: (input_data_page_first << BASE_PAGE_SHIFT) as u64,
+            data_pages: input_data_page_first..input_data_page_end,
         })
     }
 
     /// Returns the base of the guest virtual address that maps the mutated
     /// contents of input files.
-    pub(crate) fn input_data_gva(&self) -> u64 {
-        self.input_data_gva
+    pub(crate) fn data_gva(&self) -> u64 {
+        self.data_gva
     }
 
     /// Returns the range of physical address that maps the mutated contents of
     /// input files.
-    pub(crate) fn input_data_pages(&self) -> Range<usize> {
-        self.input_data_pages.clone()
+    pub(crate) fn data_pages(&self) -> Range<usize> {
+        self.data_pages.clone()
     }
 
     /// Returns the number of remaining input files.
     pub(crate) fn remaining_files_count(&self) -> usize {
-        self.input_files.read().len()
+        self.files.read().len()
     }
 
     /// Picks up the next input file from the corpus.
@@ -128,7 +128,7 @@ impl Corpus {
         let _ = active_thread_count.fetch_sub(1, Ordering::SeqCst);
         let input_file = loop {
             {
-                let mut input_files = self.input_files.write();
+                let mut input_files = self.files.write();
                 if let Some(input_file) = input_files.pop() {
                     break input_file;
                 }
@@ -149,7 +149,7 @@ impl Corpus {
     /// Picks up the next input file from the corpus in a random manner. This
     /// function returns a copy of an input file and keeps the corpus unchanged.
     pub(crate) fn select_file(&self) -> InputFile {
-        let input_files = self.input_files.read();
+        let input_files = self.files.read();
         let index = rdtsc() as usize % input_files.len();
         input_files[index].clone()
     }
@@ -162,7 +162,7 @@ impl Corpus {
             self.remaining_files_count() + 1
         );
 
-        self.input_files.write().push(input);
+        self.files.write().push(input);
     }
 
     // Reads the contents of all files in the specified corpus directory.

@@ -96,7 +96,7 @@ fn start_vm(
 
     // Update VM's registers to point to the mutated input data.
     vm.vt
-        .adjust_registers(global.corpus().input_data_gva(), mutation_engine.current_input.size());
+        .adjust_registers(global.corpus().data_gva(), mutation_engine.current_input.size());
 
     // Run the VM until it reaches one of abort conditions.
     let stats = &mut RunStats::new();

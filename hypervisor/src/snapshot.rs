@@ -24,7 +24,7 @@ pub(crate) struct Snapshot {
     memory_ranges: Vec<SnapshotMemoryRange>,
     read_bitmap: BitVec,
     resolved_page_count: u64,
-    snapshot_file: RegularFile,
+    file: RegularFile,
 }
 
 /// The collection of register values captured in the snapshot file.
@@ -127,7 +127,7 @@ impl Snapshot {
             memory_ranges,
             read_bitmap: BitVec::from_elem(memory_size_in_pages, false),
             resolved_page_count: 0,
-            snapshot_file,
+            file: snapshot_file,
         };
 
         // Page-in contents of the guest GDT, as a later VM setting up step needs
@@ -148,7 +148,7 @@ impl Snapshot {
     // Resolves the page that should back the given guest `pfn`.
     fn resolve_page(&mut self, pfn: usize) -> Result<&mut Page, uefi::Error> {
         let page = &mut self.memory[pfn];
-        read_page_from_snapshot(&mut self.snapshot_file, page, pfn)?;
+        read_page_from_snapshot(&mut self.file, page, pfn)?;
         self.read_bitmap.set(pfn, true);
         self.resolved_page_count += 1;
         Ok(page)

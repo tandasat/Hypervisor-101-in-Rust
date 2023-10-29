@@ -23,7 +23,7 @@ pub(crate) struct MutationEngine {
 
 impl MutationEngine {
     pub(crate) fn new(corpus: &Corpus) -> Self {
-        let count = corpus.input_data_pages().len();
+        let count = corpus.data_pages().len();
         let input_pages = unsafe { Box::<[Page]>::new_zeroed_slice(count).assume_init() };
 
         Self {
@@ -47,7 +47,7 @@ impl MutationEngine {
             } else {
                 corpus.consume_file(active_thread_count)
             };
-            self.copy_input_to_guest_memory(&input, corpus.input_data_gva());
+            self.copy_input_to_guest_memory(&input, corpus.data_gva());
             self.current_input = MutatingInput::new(input);
         } else {
             // Otherwise, mutate the input.
@@ -159,9 +159,9 @@ pub(crate) fn resolve_page_from_input_data(
     pfn: usize,
     mutation_engine: &MutationEngine,
 ) -> Option<*const Page> {
-    let pages = global.corpus().input_data_pages();
+    let pages = global.corpus().data_pages();
     if pages.contains(&pfn) {
-        let pfn_in_input_range = pfn - global.corpus().input_data_pages().start;
+        let pfn_in_input_range = pfn - global.corpus().data_pages().start;
         Some(mutation_engine.resolve_page(pfn_in_input_range))
     } else {
         None
