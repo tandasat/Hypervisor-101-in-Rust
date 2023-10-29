@@ -39,6 +39,7 @@ def main():
         lines = [line.rstrip() for line in file]
 
     count = 0
+    initial_block = 0
     for line in lines:
         match = re.search(r"COVERAGE: \[(.+)\]", line)
         if not match:
@@ -48,8 +49,12 @@ def main():
         addresses = [int(addr, 16) for addr in match.group(1).split(", ")]
         for address in addresses:
             highlight_basic_block(address)
+            if initial_block == 0:
+                initial_block = address
         count += len(addresses)
-    print(f"Highlighted {count} basic blocks")
+    print(f"Highlighted {count} basic blocks.")
+    if initial_block:
+        print(f"Initial block at 0x{initial_block:x}.")
 
 
 if __name__ == "__main__":
