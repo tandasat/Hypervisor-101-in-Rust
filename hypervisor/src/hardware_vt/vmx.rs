@@ -739,7 +739,7 @@ extern "efiapi" {
     /// Runs the guest until VM-exit occurs.
     fn run_vm_vmx(registers: &mut GuestRegisters, launched: u64) -> u64;
 }
-global_asm!(include_str!("vmx_run_vm.nasm"));
+global_asm!(include_str!("vmx_run_vm.S"));
 
 /// The wrapper of the VMXON instruction.
 fn vmxon(vmxon_region: &mut Vmxon) {

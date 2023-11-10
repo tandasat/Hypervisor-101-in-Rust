@@ -477,7 +477,7 @@ extern "efiapi" {
     /// Runs the guest until #VMEXIT occurs.
     fn run_vm_svm(registers: &mut GuestRegisters, guest_vmcb_pa: *mut Vmcb);
 }
-global_asm!(include_str!("svm_run_vm.nasm"));
+global_asm!(include_str!("svm_run_vm.S"));
 
 /// Returns the access rights of the given segment for SVM.
 fn get_segment_access_right(table_base: u64, selector: u16) -> u16 {
