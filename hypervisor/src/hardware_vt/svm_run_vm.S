@@ -20,7 +20,7 @@
 ;// Runs the guest until #VMEXIT occurs.
 ;//
 ;// This function works as follows:
-;// 1. saves host general purpose register valus to stack.
+;// 1. saves host general purpose register values to stack.
 ;// 2. loads guest general purpose register values from `GuestRegisters`.
 ;// 3. executes the VMRUN instruction that
 ;//     1. saves host register values to the host state area, as specified by
@@ -37,7 +37,7 @@
 ;// 5. saves guest general purpose register values to `GuestRegisters`.
 ;// 6. loads host general purpose register values from stack.
 ;//
-;// Note that state swich implemented here is not complete, and some register
+;// Note that state switch implemented here is not complete, and some register
 ;// values are "leaked" to the other side, for example, XMM registers, and those
 ;// that are managed with VMSAVE and VMLOAD instructions.
 ;//
@@ -91,7 +91,7 @@ run_vm_svm:
     ;// Run the guest until #VMEXIT occurs.
     vmrun   rax
 
-    ;// #VMEXIT occured. Save current (guest) general purpose registers.
+    ;// #VMEXIT occurred. Save current (guest) general purpose registers.
     xchg    bx, bx
     xchg    r15, [rsp]  ;// r15 <= `registers` / [rsp] <= guest r15
     mov     [r15 + registers_rbx], rbx

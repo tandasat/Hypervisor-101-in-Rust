@@ -38,7 +38,7 @@
 ;// On VM-exit, the processor comes back to this function (at "VmExit") because
 ;// the host RIP is configured so.
 ;//
-;// Note that state swich implemented here is not complete, and some register
+;// Note that state switch implemented here is not complete, and some register
 ;// values are "leaked" to the other side, for example, XMM registers.
 ;//
 ;// extern "efiapi" fn run_vm_vmx(registers: &mut GuestRegisters, launched: u64) -> u64;
@@ -116,7 +116,7 @@ run_vm_vmx:
     jmp     .Exit
 
 .VmExit:
-    ;// VM-exit occured. Save current (guest) general purpose registers.
+    ;// VM-exit occurred. Save current (guest) general purpose registers.
     xchg    bx, bx
     xchg    r15, [rsp]  ;// r15 <= `registers` / [rsp] <= guest r15
     mov     [r15 + registers_rax], rax
