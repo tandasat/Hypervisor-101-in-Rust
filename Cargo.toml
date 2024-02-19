@@ -15,3 +15,44 @@ repository = "https://github.com/tandasat/Hypervisor-101-in-Rust"
 keywords = ["fuzzing", "UEFI", "hypervisor"]
 categories = ["development-tools::testing", "no-std"]
 readme = "./README.md"
+
+[workspace.lints.rust]
+# groups: https://doc.rust-lang.org/rustc/lints/groups.html
+future_incompatible = "warn"
+let_underscore = "warn"
+nonstandard_style = "warn"
+rust_2018_compatibility = "warn"
+rust_2018_idioms = "warn"
+rust_2021_compatibility = "warn"
+unused = "warn"
+
+# warnings that are not enabled by default or covered by groups
+# https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html
+macro_use_extern_crate = "warn"
+meta_variable_misuse = "warn"
+missing_abi = "warn"
+missing_copy_implementations = "warn"
+missing_debug_implementations = "warn"
+missing_docs = "warn"
+non_ascii_idents = "warn"
+noop_method_call = "warn"
+single_use_lifetimes = "warn"
+trivial_numeric_casts = "warn"
+unreachable_pub = "warn"
+unsafe_op_in_unsafe_fn = "warn"
+unused_crate_dependencies = "warn"
+unused_import_braces = "warn"
+unused_lifetimes = "warn"
+unused_qualifications = "warn"
+unused_results = "warn"
+
+# https://github.com/rust-lang/rust-clippy/blob/master/README.md
+[workspace.lints.clippy]
+pedantic = "warn"
+cargo = "warn"
+
+# https://doc.rust-lang.org/rustdoc/lints.html
+[workspace.lints.rustdoc]
+missing_crate_level_docs = "warn"
+private_doc_tests = "warn"
+invalid_html_tags = "warn"

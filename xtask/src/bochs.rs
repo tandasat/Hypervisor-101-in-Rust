@@ -20,7 +20,7 @@ impl TestVm for Bochs {
 
     fn run(&self) -> Result<(), DynError> {
         // Start a threads that tries to connect to Bochs in an infinite loop.
-        thread::spawn(|| loop {
+        let _unused = thread::spawn(|| loop {
             let client = if env::consts::OS == "macos" {
                 "nc"
             } else {
@@ -47,7 +47,7 @@ impl TestVm for Bochs {
         });
 
         let cpu_type = self.cpu.to_string().to_lowercase();
-        thread::spawn(move || {
+        let _unused = thread::spawn(move || {
             // Start Bochs from the "tests" directory in background.
             static DBG_CMD: &str = "./bochs/dbg_command.txt";
             let bochs = if cfg!(target_os = "windows") {

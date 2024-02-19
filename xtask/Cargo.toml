@@ -1,17 +1,20 @@
 [package]
 name = "xtask"
-version.workspace = true
+version = "0.1.2"
+description = "A build and test assist program"
 edition.workspace = true
 authors.workspace = true
-description = "A build and test assist program"
 license.workspace = true
 repository.workspace = true
 keywords.workspace = true
 categories.workspace = true
 readme.workspace = true
 
+[lints]
+workspace = true
+
 [dependencies]
 cfg-if = "1.0"
-clap = { version = "4.3", features = ["derive"] }
+clap = { version = "4.5", features = ["derive"] }
 ctrlc = "3.4"
 wsl = "0.1"

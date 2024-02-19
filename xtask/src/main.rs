@@ -4,45 +4,6 @@
 //! cargo xtask
 //! ```
 
-#![warn(
-    // groups: https://doc.rust-lang.org/rustc/lints/groups.html
-    future_incompatible,
-    let_underscore,
-    nonstandard_style,
-    rust_2018_compatibility,
-    rust_2018_idioms,
-    rust_2021_compatibility,
-    unused,
-
-    // warnings that are not enabled by default or covered by groups
-    // https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html
-    macro_use_extern_crate,
-    meta_variable_misuse,
-    missing_abi,
-    missing_copy_implementations,
-    missing_debug_implementations,
-    missing_docs,
-    non_ascii_idents,
-    noop_method_call,
-    single_use_lifetimes,
-    trivial_numeric_casts,
-    unreachable_pub,
-    unsafe_op_in_unsafe_fn,
-    unused_crate_dependencies,
-    unused_import_braces,
-    unused_lifetimes,
-    unused_qualifications,
-  //unused_results,
-
-    // https://github.com/rust-lang/rust-clippy/blob/master/README.md
-    clippy::pedantic,
-    clippy::cargo,
-
-    // https://doc.rust-lang.org/rustdoc/lints.html
-    rustdoc::missing_crate_level_docs,
-    rustdoc::private_doc_tests,
-    rustdoc::invalid_html_tags,
-)]
 #![allow(clippy::multiple_crate_versions)]
 
 use bochs::{Bochs, Cpu};
@@ -110,9 +71,9 @@ fn build_hypervisor(release: bool) -> Result<(), DynError> {
     // be overwritten while running.
     let cargo = env::var("CARGO").unwrap_or_else(|_| "cargo".to_string());
     let mut command = Command::new(cargo);
-    command.args(["build", "--package", "rhv"]);
+    let _ = command.args(["build", "--package", "rhv"]);
     if release {
-        command.arg("--release");
+        let _ = command.arg("--release");
     }
     let ok = command.current_dir(project_root_dir()).status()?.success();
     if !ok {

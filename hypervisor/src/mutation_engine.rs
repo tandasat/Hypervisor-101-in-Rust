@@ -237,7 +237,7 @@ impl fmt::Debug for MutatingInput {
                 "{:?} #{} (bit {} at offset {:?} bytes)",
                 self.input.name,
                 self.mutation_count,
-                core::intrinsics::saturating_sub(self.mutation_count, 1) % 8,
+                self.mutation_count.saturating_sub(1) % 8,
                 self.mutation_count / 8
             )
         }

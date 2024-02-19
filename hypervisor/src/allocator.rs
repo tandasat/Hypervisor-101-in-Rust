@@ -31,7 +31,8 @@ unsafe impl GlobalAlloc for BootTimeAllocator {
             // Allocate more space for alignment.
             let Ok(ptr) = system_table()
                 .boot_services()
-                .allocate_pool(MemoryType::BOOT_SERVICES_DATA, size + align) else {
+                .allocate_pool(MemoryType::BOOT_SERVICES_DATA, size + align)
+            else {
                 return core::ptr::null_mut();
             };
             // Calculate align offset.
@@ -53,15 +54,17 @@ unsafe impl GlobalAlloc for BootTimeAllocator {
 
     unsafe fn dealloc(&self, ptr: *mut u8, layout: Layout) {
         if (layout.align() % 0x1000) == 0 {
-            system_table()
-                .boot_services()
-                .free_pages(ptr as u64, size_to_pages(layout.size()))
-                .unwrap();
+            unsafe {
+                system_table()
+                    .boot_services()
+                    .free_pages(ptr as u64, size_to_pages(layout.size()))
+                    .unwrap();
+            };
         } else if layout.align() > 8 {
             let ptr = unsafe { ptr.cast::<*mut u8>().sub(1).read() };
-            system_table().boot_services().free_pool(ptr).unwrap();
+            unsafe { system_table().boot_services().free_pool(ptr).unwrap() };
         } else {
-            system_table().boot_services().free_pool(ptr).unwrap();
+            unsafe { system_table().boot_services().free_pool(ptr).unwrap() };
         }
     }
 }

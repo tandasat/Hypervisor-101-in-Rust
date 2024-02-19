@@ -2,10 +2,10 @@ cargo-features = ["per-package-target"]
 
 [package]
 name = "rhv"
+description = "A type-1 fuzzing hypervisor for UEFI on Intel/AMD processors"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
-description = "A type-1 fuzzing hypervisor for UEFI on Intel/AMD processors"
 license.workspace = true
 repository.workspace = true
 keywords.workspace = true
@@ -27,8 +27,11 @@ log = { version = "0.4", default-features = false }
 serde = { version = "1.0", default-features = false, features = ["alloc", "derive"]}
 serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
 spin = "0.9"
-uefi = { version = "0.20", features = ["alloc"] }
+uefi = { version = "0.26", features = ["alloc"] }
 x86 = "0.52"
+
+[lints]
+workspace = true
 
 [features]
 # Default is configured for Bochs. For bare metal, start with no feature and

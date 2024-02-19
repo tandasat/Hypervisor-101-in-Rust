@@ -1,48 +1,8 @@
 #![doc = include_str!("../README.md")]
 #![no_main]
 #![no_std]
-#![feature(core_intrinsics)]
 #![feature(new_uninit)]
 #![feature(panic_info_message)]
-#![warn(
-    // groups: https://doc.rust-lang.org/rustc/lints/groups.html
-    future_incompatible,
-    let_underscore,
-    nonstandard_style,
-    rust_2018_compatibility,
-    rust_2018_idioms,
-    rust_2021_compatibility,
-    unused,
-
-    // warnings that are not enabled by default or covered by groups
-    // https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html
-    macro_use_extern_crate,
-    meta_variable_misuse,
-    missing_abi,
-    missing_copy_implementations,
-    missing_debug_implementations,
-    missing_docs,
-    non_ascii_idents,
-    noop_method_call,
-    single_use_lifetimes,
-    trivial_numeric_casts,
-    unreachable_pub,
-    unsafe_op_in_unsafe_fn,
-    unused_crate_dependencies,
-    unused_import_braces,
-    unused_lifetimes,
-    unused_qualifications,
-    unused_results,
-
-    // https://github.com/rust-lang/rust-clippy/blob/master/README.md
-    clippy::pedantic,
-    clippy::cargo,
-
-    // https://doc.rust-lang.org/rustdoc/lints.html
-    rustdoc::missing_crate_level_docs,
-    rustdoc::private_doc_tests,
-    rustdoc::invalid_html_tags,
-)]
 #![allow(clippy::cast_possible_truncation)]
 #![allow(clippy::multiple_crate_versions)]
 
@@ -145,7 +105,7 @@ fn start_hypervisor_on_all_processors(global: &mut GlobalState) -> ! {
         // either, and the calling processor is stuck at here. We could fix this
         // by sending INIT-SIPI-SIPI manually.
         let procedure_argument = (global as *mut GlobalState).cast::<c_void>();
-        mp.startup_all_aps(false, start_hypervisor_on_ap, procedure_argument, None)
+        mp.startup_all_aps(false, start_hypervisor_on_ap, procedure_argument, None, None)
             .unwrap();
         panic!("Should not return from startup_all_aps()")
     }
