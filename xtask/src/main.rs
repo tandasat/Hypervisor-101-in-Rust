@@ -37,7 +37,7 @@ enum Commands {
     BochsIntel,
     /// Start a Bochs VM with an AMD processor
     BochsAmd,
-    /// Start a VMware VM
+    /// Start a `VMware` VM
     Vmware,
 }
 

@@ -92,7 +92,7 @@ impl Vm {
     }
 
     pub(crate) fn nested_pml4_addr(&mut self) -> *mut NestedPagingStructure {
-        self.nested_pml4.as_mut() as *mut _
+        core::ptr::from_mut(self.nested_pml4.as_mut())
     }
 
     /// Revert all dirty nested PTEs to point to the original physical
@@ -213,7 +213,7 @@ impl Vm {
         let pte = &mut pt.entries[pti];
 
         // Saves nested PTE and the original (current) PA for reverting.
-        self.dirty_entries[self.used_dirty_page_count] = (pte as *mut _, pte.pfn());
+        self.dirty_entries[self.used_dirty_page_count] = (core::ptr::from_mut(pte), pte.pfn());
 
         // Update translation to point to `dirty_pages`, which is allocated for
         // each logical processor and never be shared with others. Thus, updating
@@ -224,13 +224,13 @@ impl Vm {
             .vt
             .nps_entry_flags(NestedPagingStructureEntryType::RwxWriteBack);
         let new_page = &mut self.dirty_pages[self.used_dirty_page_count];
-        pte.set_translation(new_page as *const _ as u64, flags);
+        pte.set_translation(core::ptr::from_ref(new_page) as u64, flags);
         self.used_dirty_page_count += 1;
 
         // Copy contents of the previous physical address into the new physical
         // address.
         unsafe {
-            core::ptr::copy_nonoverlapping(copy_from, new_page as *mut _, 1);
+            core::ptr::copy_nonoverlapping(copy_from, core::ptr::from_mut(new_page), 1);
         };
 
         true

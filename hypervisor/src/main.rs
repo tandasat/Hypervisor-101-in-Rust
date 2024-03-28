@@ -104,7 +104,7 @@ fn start_hypervisor_on_all_processors(global: &mut GlobalState) -> ! {
         // stage, and `start_hypervisor` never returns. So, this API never returns
         // either, and the calling processor is stuck at here. We could fix this
         // by sending INIT-SIPI-SIPI manually.
-        let procedure_argument = (global as *mut GlobalState).cast::<c_void>();
+        let procedure_argument = core::ptr::from_mut::<GlobalState>(global).cast::<c_void>();
         mp.startup_all_aps(false, start_hypervisor_on_ap, procedure_argument, None, None)
             .unwrap();
         panic!("Should not return from startup_all_aps()")

@@ -113,12 +113,9 @@ impl TestVm for Vmware {
 
             // Read and print stdout as they come in. This does not return.
             let reader = BufReader::new(output.stdout.unwrap());
-            reader
-                .lines()
-                .map_while(std::result::Result::ok)
-                .for_each(|line| {
-                    println!("{:>4}: {line}\r", now.elapsed().unwrap_or_default().as_secs());
-                });
+            reader.lines().map_while(Result::ok).for_each(|line| {
+                println!("{:>4}: {line}\r", now.elapsed().unwrap_or_default().as_secs());
+            });
         });
 
         println!("🕒 Please select 'EFI Internal Shell (Unsupported option)' on VMware...");

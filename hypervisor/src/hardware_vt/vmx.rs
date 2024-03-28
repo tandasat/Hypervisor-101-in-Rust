@@ -600,7 +600,7 @@ struct TaskStateSegment([u8; 104]);
 /// Builds a segment descriptor from the task state segment.
 fn task_segment_descriptor(tss: &TaskStateSegment) -> u64 {
     let tss_size = core::mem::size_of::<TaskStateSegment>() as u64;
-    let tss_base = tss as *const TaskStateSegment as u64;
+    let tss_base = core::ptr::from_ref::<TaskStateSegment>(tss) as u64;
     let tss_descriptor = <DescriptorBuilder as GateDescriptorBuilder<u32>>::tss_descriptor(
         tss_base,
         tss_size - 1,
@@ -744,19 +744,19 @@ global_asm!(include_str!("vmx_run_vm.S"));
 /// The wrapper of the VMXON instruction.
 fn vmxon(vmxon_region: &mut Vmxon) {
     // Safety: this project runs at CPL0.
-    unsafe { x86::bits64::vmx::vmxon(vmxon_region as *mut _ as u64).unwrap() };
+    unsafe { x86::bits64::vmx::vmxon(core::ptr::from_mut(vmxon_region) as u64).unwrap() };
 }
 
 /// The wrapper of the VMCLEAR instruction.
 fn vmclear(vmcs_region: &mut Vmcs) {
     // Safety: this project runs at CPL0.
-    unsafe { x86::bits64::vmx::vmclear(vmcs_region as *mut _ as u64).unwrap() };
+    unsafe { x86::bits64::vmx::vmclear(core::ptr::from_mut(vmcs_region) as u64).unwrap() };
 }
 
 /// The wrapper of the VMPTRLD instruction.
 fn vmptrld(vmcs_region: &mut Vmcs) {
     // Safety: this project runs at CPL0.
-    unsafe { x86::bits64::vmx::vmptrld(vmcs_region as *mut _ as u64).unwrap() }
+    unsafe { x86::bits64::vmx::vmptrld(core::ptr::from_mut(vmcs_region) as u64).unwrap() }
 }
 
 /// The wrapper of the VMPTRST instruction.
@@ -820,11 +820,11 @@ impl fmt::Debug for Vmcs {
     #[rustfmt::skip]
     #[allow(clippy::too_many_lines)]
     fn fmt(&self, format: &mut fmt::Formatter<'_>) -> fmt::Result {
-        assert!(self as *const _ == vmptrst());
+        assert!(core::ptr::from_ref(self) == vmptrst());
 
         // Dump the current VMCS. Not that this is not exhaustive.
         format.debug_struct("Vmcs")
-        .field("Current VMCS", &(self as *const _))
+        .field("Current VMCS", &core::ptr::from_ref(self))
         .field("Revision ID", &self.revision_id)
 
         // 16-Bit Guest-State Fields

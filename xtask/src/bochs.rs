@@ -36,12 +36,9 @@ impl TestVm for Bochs {
             let now = SystemTime::now();
 
             let reader = BufReader::new(output.stdout.unwrap());
-            reader
-                .lines()
-                .map_while(std::result::Result::ok)
-                .for_each(|line| {
-                    println!("{:>4}: {line}\r", now.elapsed().unwrap_or_default().as_secs());
-                });
+            reader.lines().map_while(Result::ok).for_each(|line| {
+                println!("{:>4}: {line}\r", now.elapsed().unwrap_or_default().as_secs());
+            });
 
             thread::sleep(Duration::from_secs(1));
         });
@@ -67,7 +64,7 @@ impl TestVm for Bochs {
             let reader = BufReader::new(output.stdout.unwrap());
             reader
                 .lines()
-                .map_while(std::result::Result::ok)
+                .map_while(Result::ok)
                 .for_each(|line| println!("{line}\r"));
         });
 
