@@ -101,9 +101,6 @@ fn open(dir: &mut Directory, filename: &str) -> Result<FileType, uefi::Error> {
     // Acquire the UEFI system table lock before use of the file API.
     let _lock = system_table();
     dir.open(name, FileMode::Read, FileAttribute::empty())
-        .map_err(|err| {
-            error!("{filename:#?}: {:#?}", err.status());
-            err
-        })?
+        .inspect_err(|err| error!("{filename:#?}: {:#?}", err.status()))?
         .into_type()
 }

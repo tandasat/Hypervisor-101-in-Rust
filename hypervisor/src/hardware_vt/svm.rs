@@ -308,7 +308,7 @@ struct Vmcb {
     control_area: ControlArea,
     state_save_area: StateSaveArea,
 }
-const _: () = assert!(core::mem::size_of::<Vmcb>() == 0x1000);
+const _: () = assert!(size_of::<Vmcb>() == 0x1000);
 
 /// The "metadata" area where we can specify what operations to intercept and
 /// can read details of #VMEXIT.
@@ -363,7 +363,7 @@ struct ControlArea {
     _padding4: [u8; 0x3e0 - 0x110], // +0x110
     reserved_for_host: [u8; 0x20], // +0x3e0
 }
-const _: () = assert!(core::mem::size_of::<ControlArea>() == 0x400);
+const _: () = assert!(size_of::<ControlArea>() == 0x400);
 
 /// The ares to specify and read guest register values.
 ///
@@ -455,7 +455,7 @@ struct StateSaveArea {
     _padding6: [u8; 0x2df - 0x298], // +0x298
     spec_ctl: u64,      // +0x2e0
 }
-const _: () = assert!(core::mem::size_of::<StateSaveArea>() == 0x2e8);
+const _: () = assert!(size_of::<StateSaveArea>() == 0x2e8);
 
 /// 4KB block of memory where the host state is saved to on VMRUN and loaded
 /// from on #VMEXIT.
@@ -465,7 +465,7 @@ const _: () = assert!(core::mem::size_of::<StateSaveArea>() == 0x2e8);
 #[allow(clippy::doc_markdown)]
 #[repr(C, align(4096))]
 struct HostStateArea([u8; 0x1000]);
-const _: () = assert!(core::mem::size_of::<HostStateArea>() == 0x1000);
+const _: () = assert!(size_of::<HostStateArea>() == 0x1000);
 
 impl Default for HostStateArea {
     fn default() -> Self {

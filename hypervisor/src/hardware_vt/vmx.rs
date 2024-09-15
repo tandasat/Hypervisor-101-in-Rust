@@ -489,7 +489,7 @@ struct Vmxon {
     #[derivative(Default(value = "[0; 4092]"))]
     data: [u8; 4092],
 }
-const _: () = assert!(core::mem::size_of::<Vmxon>() == 0x1000);
+const _: () = assert!(size_of::<Vmxon>() == 0x1000);
 
 /// The region of memory that the logical processor uses to represent a virtual
 /// CPU. Called virtual-machine control data structure (VMCS).
@@ -504,7 +504,7 @@ struct Vmcs {
     #[derivative(Default(value = "[0; 4088]"))]
     data: [u8; 4088],
 }
-const _: () = assert!(core::mem::size_of::<Vmcs>() == 0x1000);
+const _: () = assert!(size_of::<Vmcs>() == 0x1000);
 
 /// The types of the control field.
 #[derive(Clone, Copy)]
@@ -532,7 +532,7 @@ struct InveptDescriptor {
     eptp: u64,
     _reserved: u64,
 }
-const _: () = assert!(core::mem::size_of::<InveptDescriptor>() == 16);
+const _: () = assert!(size_of::<InveptDescriptor>() == 16);
 
 /// The collection of GDT related data needed to manage the host GDT.
 #[repr(C, align(16))]
@@ -543,7 +543,7 @@ struct HostGdt {
     tr: SegmentSelector,
     cs: SegmentSelector,
 }
-const _: () = assert!((core::mem::size_of::<HostGdt>() % 0x10) == 0);
+const _: () = assert!((size_of::<HostGdt>() % 0x10) == 0);
 
 impl HostGdt {
     /// Initializes the host GDT from the current GDT.
@@ -599,7 +599,7 @@ struct TaskStateSegment([u8; 104]);
 
 /// Builds a segment descriptor from the task state segment.
 fn task_segment_descriptor(tss: &TaskStateSegment) -> u64 {
-    let tss_size = core::mem::size_of::<TaskStateSegment>() as u64;
+    let tss_size = size_of::<TaskStateSegment>() as u64;
     let tss_base = core::ptr::from_ref::<TaskStateSegment>(tss) as u64;
     let tss_descriptor = <DescriptorBuilder as GateDescriptorBuilder<u32>>::tss_descriptor(
         tss_base,

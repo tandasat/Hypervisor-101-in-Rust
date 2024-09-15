@@ -158,7 +158,7 @@ pub(crate) struct NestedPagingStructure {
     /// An array of extended page table entry (8 bytes, 512 entries)
     pub(crate) entries: [NestedPagingStructureEntry; PAGE_SIZE_ENTRIES],
 }
-const _: () = assert!(core::mem::size_of::<NestedPagingStructure>() == 0x1000);
+const _: () = assert!(size_of::<NestedPagingStructure>() == 0x1000);
 
 bitfield! {
     /// Platform independent representation of a nested paging structure entry.

@@ -34,12 +34,10 @@ pub(crate) struct Snapshot {
 pub(crate) struct SnapshotRegisters {
     pub(crate) gdtr: x86::dtables::DescriptorTablePointer<u64>, // +0x0
     #[derivative(Debug = "ignore")]
-    pub(crate) _padding1:
-        [u8; 0x10 - core::mem::size_of::<x86::dtables::DescriptorTablePointer<u64>>()],
+    pub(crate) _padding1: [u8; 0x10 - size_of::<x86::dtables::DescriptorTablePointer<u64>>()],
     pub(crate) idtr: x86::dtables::DescriptorTablePointer<u64>, // +0x10
     #[derivative(Debug = "ignore")]
-    pub(crate) _padding2:
-        [u8; 0x10 - core::mem::size_of::<x86::dtables::DescriptorTablePointer<u64>>()],
+    pub(crate) _padding2: [u8; 0x10 - size_of::<x86::dtables::DescriptorTablePointer<u64>>()],
     pub(crate) es: u16, // +0x20
     pub(crate) cs: u16,
     pub(crate) ss: u16,
@@ -191,7 +189,7 @@ struct SnapshotMetadataRaw {
     /// The collection of register values stored in the snapshot file.
     registers: SnapshotRegisters,
 }
-const _: () = assert!(core::mem::size_of::<SnapshotMetadataRaw>() == 0x1000);
+const _: () = assert!(size_of::<SnapshotMetadataRaw>() == 0x1000);
 
 /// A range of physical memory captured in the snapshot file.
 #[derive(Debug, Clone)]

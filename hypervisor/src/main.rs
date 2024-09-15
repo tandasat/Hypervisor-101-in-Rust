@@ -1,10 +1,10 @@
 #![doc = include_str!("../README.md")]
 #![no_main]
 #![no_std]
-#![feature(new_uninit)]
-#![feature(panic_info_message)]
+#![feature(new_zeroed_alloc)]
 #![allow(clippy::cast_possible_truncation)]
 #![allow(clippy::multiple_crate_versions)]
+#![allow(clippy::doc_markdown)]
 
 #[cfg(not(target_pointer_width = "64"))]
 compile_error!("This project must target the 64bit-width pointer environment.");
@@ -144,7 +144,7 @@ fn print_image_info() {
 #[derive(Debug, Clone, Copy)]
 #[repr(C, align(4096))]
 struct Page([u8; BASE_PAGE_SIZE]);
-const _: () = assert!(core::mem::size_of::<Page>() == 0x1000);
+const _: () = assert!(size_of::<Page>() == 0x1000);
 
 impl Page {
     fn new() -> Self {
