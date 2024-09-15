@@ -46,7 +46,7 @@ use uefi::{
 use x86::current::paging::{BASE_PAGE_SHIFT, BASE_PAGE_SIZE};
 
 /// The entry point of the program.
-#[no_mangle]
+#[unsafe(no_mangle)]
 extern "efiapi" fn efi_main(image: Handle, system_table: SystemTable<Boot>) -> Status {
     // Initialize the logger and the system services.
     init_uart_logger();

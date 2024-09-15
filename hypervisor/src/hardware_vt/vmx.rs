@@ -735,7 +735,7 @@ fn get_segment_access_right(table_base: u64, selector: u16) -> u32 {
     ar & 0b1111_0000_1111_1111
 }
 
-extern "efiapi" {
+unsafe extern "efiapi" {
     /// Runs the guest until VM-exit occurs.
     fn run_vm_vmx(registers: &mut GuestRegisters, launched: u64) -> u64;
 }

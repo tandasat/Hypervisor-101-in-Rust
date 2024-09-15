@@ -473,7 +473,7 @@ impl Default for HostStateArea {
     }
 }
 
-extern "efiapi" {
+unsafe extern "efiapi" {
     /// Runs the guest until #VMEXIT occurs.
     fn run_vm_svm(registers: &mut GuestRegisters, guest_vmcb_pa: *mut Vmcb);
 }
