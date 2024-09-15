@@ -20,14 +20,14 @@ test = false
 bench = false
 
 [dependencies]
-bitfield = "0.14"
-bit-vec = { version = "0.6", default-features = false }
+bitfield = "0.17"
+bit-vec = { version = "0.8", default-features = false }
 derivative = { version ="2.2", features = ["use_core"]}
 log = { version = "0.4", default-features = false }
 serde = { version = "1.0", default-features = false, features = ["alloc", "derive"]}
 serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
 spin = "0.9"
-uefi = { version = "0.26", features = ["alloc"] }
+uefi = { version = "0.31", features = ["alloc"] }
 x86 = "0.52"
 
 [lints]

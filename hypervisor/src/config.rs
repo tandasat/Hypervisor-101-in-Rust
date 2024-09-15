@@ -1,7 +1,7 @@
 //! The module containing various constants that may be modified by developers.
 
 /// The logging level.
-pub(crate) const LOGGING_LEVEL: log::LevelFilter = log::LevelFilter::Trace;
+pub(crate) const LOGGING_LEVEL: log::LevelFilter = log::LevelFilter::Debug;
 
 /// Once in how many iterations stats should be sent to the serial output.
 /// Ignored when [`LOGGING_LEVEL`] is `Trace`.

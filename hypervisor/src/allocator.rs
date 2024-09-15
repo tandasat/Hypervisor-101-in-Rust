@@ -36,6 +36,7 @@ unsafe impl GlobalAlloc for BootTimeAllocator {
                 return core::ptr::null_mut();
             };
             // Calculate align offset.
+            let ptr = ptr.as_ptr();
             let mut offset = ptr.align_offset(align);
             if offset == 0 {
                 offset = align;
@@ -48,7 +49,7 @@ unsafe impl GlobalAlloc for BootTimeAllocator {
             system_table()
                 .boot_services()
                 .allocate_pool(MemoryType::BOOT_SERVICES_DATA, size)
-                .unwrap_or(core::ptr::null_mut())
+                .map_or(core::ptr::null_mut(), core::ptr::NonNull::as_ptr)
         }
     }
 
