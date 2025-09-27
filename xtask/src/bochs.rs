@@ -21,12 +21,7 @@ impl TestVm for Bochs {
     fn run(&self) -> Result<(), DynError> {
         // Start a threads that tries to connect to Bochs in an infinite loop.
         let _unused = thread::spawn(|| loop {
-            let client = if env::consts::OS == "macos" {
-                "nc"
-            } else {
-                "telnet"
-            };
-            let output = UnixCommand::new(client)
+            let output = UnixCommand::new("nc")
                 .args(["localhost", "14449"])
                 .stdout(Stdio::piped())
                 .stdin(Stdio::piped())

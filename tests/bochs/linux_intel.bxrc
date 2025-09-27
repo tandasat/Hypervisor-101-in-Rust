@@ -3,7 +3,7 @@ plugin_ctrl: biosdev=true, busmouse=false, e1000=false, es1370=false, extfpuirq=
 config_interface: textconfig
 display_library: nogui
 memory: host=1024, guest=1024
-romimage: file="/usr/share/ovmf/OVMF.fd", address=0xffe00000, options=none
+romimage: file="/usr/share/ovmf/OVMF.fd", options=none
 vgaromimage: file="/usr/local/share/bochs/VGABIOS-lgpl-latest"
 boot: disk
 floppy_bootsig_check: disabled=0

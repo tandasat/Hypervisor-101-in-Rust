@@ -70,7 +70,7 @@ On VSCode, the `cargo build` task is also available.
         ```
     - On Ubuntu and Windows
         ```shell
-        sudo apt install ovmf vgabios
+        sudo apt install ovmf vgabios libltdl-dev
         cd Bochs/bochs
         sh .conf.linux
         make
