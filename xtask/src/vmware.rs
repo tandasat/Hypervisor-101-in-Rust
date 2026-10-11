@@ -53,9 +53,9 @@ impl TestVm for Vmware {
 
     fn run(&self) -> Result<(), DynError> {
         let vmrun = if cfg!(target_os = "windows") {
-            r"C:\Program Files (x86)\VMware\VMware Workstation\vmrun.exe"
+            r"C:\Program Files\VMware\VMware Workstation\vmrun.exe"
         } else if wsl::is_wsl() {
-            "/mnt/c/Program Files (x86)/VMware/VMware Workstation/vmrun.exe"
+            "/mnt/c/Program Files/VMware/VMware Workstation/vmrun.exe"
         } else {
             "vmrun"
         };
